@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: test-task
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: test
+      image: alpine
+      script: |
+        cd $(workspaces.source.path)/pipeline
+        echo "Running fake tests..."
+        echo "All tests passed ✅"

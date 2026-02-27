@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: git-clone-task
+spec:
+  workspaces:
+    - name: output
+  steps:
+    - name: clone
+      image: alpine/git
+      script: |
+        cd /workspace/output
+        rm -rf pipeline
+        git clone https://github.com/Swati-830/demo-app.git pipeline

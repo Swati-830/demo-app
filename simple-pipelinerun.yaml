@@ -1,0 +1,7 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: simple-pipelinerun
+spec:
+  pipelineRef:
+    name: simple-pipeline

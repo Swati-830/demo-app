@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: build-task
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: build
+      image: alpine
+      script: |
+        cd $(workspaces.source.path)/pipeline
+        echo "Simulating build..."
+        ls -la

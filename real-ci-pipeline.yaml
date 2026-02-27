@@ -1,0 +1,41 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: real-ci-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone-task
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+
+    - name: build
+      runAfter: ["clone"]
+      taskRef:
+        name: build-task
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+    - name: test
+      runAfter: ["build"]
+      taskRef:
+        name: test-task
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+   
+    - name: docker-build
+      runAfter: ["build"]
+      taskRef:
+        name: kaniko-build
+      params:
+        - name: IMAGE
+          value: swati/demo-image:latest
+      workspaces:
+        - name: source
+          workspace: shared-workspace
