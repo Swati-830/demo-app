@@ -1,2 +1,2 @@
-FROM alpine
-CMD ["echo", "Hello from Swati CI Image 🚀"]
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html

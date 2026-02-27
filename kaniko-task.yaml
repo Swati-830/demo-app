@@ -15,4 +15,13 @@ spec:
         - --dockerfile=$(workspaces.source.path)/pipeline/Dockerfile
         - --context=$(workspaces.source.path)/pipeline
         - --destination=$(params.IMAGE)
-        - --no-push
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker
+  volumes:
+    - name: docker-config
+      secret:
+        secretName: dockerhub-secret
+        items:
+          - key: .dockerconfigjson
+            path: config.json
